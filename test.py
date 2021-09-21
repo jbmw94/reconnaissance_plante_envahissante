@@ -20,7 +20,6 @@ from flask_login import login_required, current_user
 
 
  
-HOME_URL = "index2.html"
 # @app.route('/', methods=['POST', 'GET'])
 # def index():
 #     if request.method == 'POST':
@@ -28,7 +27,7 @@ HOME_URL = "index2.html"
 #         n = result['adresse']
 #         return n
 #     else:
-#         return render_template(HOME_URL)
+#         return render_template(URL_INDEX)
 # @app.route('/')
 # def index : 
 #     return render_template(, title = 'Accueil')
@@ -49,7 +48,11 @@ HOME_URL = "index2.html"
 
 
 
-
+URL_LOGIN = "login.html"
+URL_PROFILE = 'profile.html'
+URL_SIGNUP = "signup.html"
+URL_RESULT = "resultat2.html"
+URL_INDEX = "index2.html"
 
 @app.route('/', methods = ['POST', 'GET'])
 def login (): 
@@ -74,7 +77,7 @@ def login ():
         else:
             print("mauvais mot de passe")
             wrong="le mot de passe est faux"
-            return render_template('login.html', wrong=wrong)#envoie message qui dit que le mot de pass est faux
+            return render_template(URL_LOGIN, wrong=wrong)#envoie message qui dit que le mot de pass est faux
             
         # else:
             
@@ -82,7 +85,8 @@ def login ():
        
         
     
-    return render_template("login.html")
+    return render_template(URL_LOGIN)
+
 @app.route("/profile", methods = ['POST', 'GET'])
 def profile () : 
     mail = session.get('webmail', None)
@@ -91,10 +95,9 @@ def profile () :
     phrase = "donné des utilisateur de l'application"
     if lvl == "admin" : 
 
-        return(render_template("profile.html", email=email, code=code, pseudo=pseudo, lvl=lvl, df=df, phrase=phrase))
+        return(render_template(URL_PROFILE, email=email, code=code, pseudo=pseudo, lvl=lvl, df=df, phrase=phrase))
     else : 
-        return(render_template("profile.html", email=email, code=code, pseudo=pseudo, lvl=lvl))
-
+        return(render_template(URL_PROFILE, email=email, code=code, pseudo=pseudo, lvl=lvl))
 
 
 @app.route('/signup', methods = ['POST', 'GET'])
@@ -110,12 +113,12 @@ def signup ():
 
         if check_mail == 'True' : 
             phrase = "un compte avec ce mail  existe déja"
-            return render_template("signup.html", phrase=phrase)
+            return render_template(URL_SIGNUP, phrase=phrase)
         else :
             pass 
         if check_password == 'indisponible' :
             phrase2 = "ce mot de passe existe déja"
-            return render_template("signup.html", phrase2=phrase2) 
+            return render_template(URL_SIGNUP, phrase2=phrase2) 
         else : 
             pass
         if password==checkpassword : 
@@ -126,9 +129,9 @@ def signup ():
             return redirect(url_for("submit_file"))
         else : 
             erreur = "le mot de passe doit être le même que celui tapé en vérification"
-            return render_template("signup.html", erreur=erreur)
+            return render_template(URL_SIGNUP, erreur=erreur)
 
-    return render_template('signup.html')
+    return render_template(URL_SIGNUP)
 
 # app.route("/bienvenue", methods = ["POST", "GET"])
 # def thank ():
@@ -171,7 +174,7 @@ def submit_file():
                 location = request.form["adresse"]
                 if location == "" :
                     requete = "vous n'avez pas donnée d'adresse"
-                    return render_template(HOME_URL, requete=requete) 
+                    return render_template(URL_INDEX, requete=requete) 
                 else : 
 
                     
@@ -197,7 +200,7 @@ def submit_file():
 
                     #print(url_link)
 
-                    return render_template('/resultat2.html', adresse=location, prediction=prediction, img_path=img_path, img_source=img_source, url_link=doc_inpn, url_wiki=doc_wiki1)
+                    return render_template('/' + URL_RESULT, adresse=location, prediction=prediction, img_path=img_path, img_source=img_source, url_link=doc_inpn, url_wiki=doc_wiki1)
 
 
 
@@ -211,13 +214,13 @@ def submit_file():
                 avec = "avec une probabilité de "
                 phrase2 = "voici votre image"
                 phrase3 = "voici une image de la plante probable"
-                return render_template('/index2.html', prediction=prediction, probabilité = probability,avec=avec, phrase2=phrase2, phrase3=phrase3, phrase=phrase, img_path=img_path, img_source=img_source)
+                return render_template('/' + URL_INDEX, prediction=prediction, probabilité = probability,avec=avec, phrase2=phrase2, phrase3=phrase3, phrase=phrase, img_path=img_path, img_source=img_source)
             else : 
                 phrase = "cela ne correspond pas a une plante envahisante, voulez vous analyser une autre image"
-                return render_template('/index2.html', phrase=phrase)
+                return render_template('/' + URL_INDEX, phrase=phrase)
     else:
-        return render_template(HOME_URL)
-    return render_template("index2.html")
+        return render_template(URL_INDEX)
+    return render_template(URL_INDEX)
             
 
 @app.route('/resultat',methods = ['POST', 'GET'])
@@ -239,7 +242,7 @@ def resultat():
 
 
 
-    return render_template("resultat2.html", adresse=location)
+    return render_template(URL_RESULT, adresse=location)
         
 # @app.route('/db-update',methods = ['POST', 'GET'])
 # def update():

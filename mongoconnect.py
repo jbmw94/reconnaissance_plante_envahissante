@@ -43,11 +43,9 @@ def nom_ref(label) :
 
 
 def insert_data(label, location, sinfun) : 
-    
-        data = []
-        
-        data.append ({"plante":label, "localisation":location})    
-        sinfun.insert_many(data)
+    data = []        
+    data.append ({"plante":label, "localisation":location})    
+    sinfun.insert_many(data)
 
         print('done')
 #sinfun, cursor, entries = connection_mongo(url_loc, code, data, collection)

@@ -10,6 +10,9 @@ from fastai.vision import *
 from fastai.vision import load_learner, open_image
 from app import UPLOAD_FOLDER
 upload = UPLOAD_FOLDER
+
+MAIN_FOLDER = "C:/Users/utilisateur/Desktop/projet chef-d'oeuvre"
+
 def getPrediction(filename):
     """"
     model2 = InceptionV3(
@@ -30,7 +33,7 @@ def getPrediction(filename):
     """""
    
    
-    learn = load_learner("C:/Users/utilisateur/Desktop/projet chef-d'oeuvre")
+    learn = load_learner(MAIN_FOLDER)
     img = open_image(upload+filename)
     pred,pred_idx,probs = learn.predict(img)
 #lbl_pred = widgets.Label()
@@ -40,7 +43,7 @@ def getPrediction(filename):
     
 
 def pred_test(image_path:str):
-    learn = load_learner("C:/Users/utilisateur/Desktop/projet chef-d'oeuvre")
+    learn = load_learner(MAIN_FOLDER)
     img = open_image(upload+image_path)
     pred_class,pred_idx,outputs = learn.predict(img)
     yhat = pred_class.obj
