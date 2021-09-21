@@ -1,0 +1,16 @@
+<script type="text/javascript">
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(function(position){
+            var latitude  = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            var altitude  = position.coords.altitude;
+            document.getElementById('geolocation').innerHTML = '<label>lon</label> : <input type="text" name="latitude" value="' + latitude + '">'
+                + '	<label>lat</label> : <input type="text" name="longitude" value="' + longitude + '">'
+                + '<input type="submit" value="aires à proximité de ma position actuelle">';
+        });
+    }
+    </script>
+    <form id="geolocation" onLoad="getCoordPosition();" 
+          method="POST" action="/localisation">
+    </form>
+    {% block content %}{% endblock %}

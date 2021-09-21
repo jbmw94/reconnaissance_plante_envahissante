@@ -1,0 +1,136 @@
+<!doctype html>
+
+<html lang="fr">
+
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+		<meta name="author" content="Jean-baptiste Marchetti--Waternaux">
+		<meta name="description" content="An image classifier dedicated to plant recognition">
+		<meta name="keywords" lang="en" content="classifier, plant, plants, image, image recognition">
+		<meta name="keywords" lang="fr" content="trieur, plant, plantes, image, reconnaissance">
+
+		<!-- Bootstrap CSS -->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">		
+		<title>Flask Image Classifier plant invading</title>
+		<link rel="stylesheet" media="screen" type="text/css" href="/static/monstyle.css"/>
+		<link rel="shortcut icon" type="image/x-icon" href="./assets/icon.jpg">
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			if(navigator.geolocation){
+				navigator.geolocation.getCurrentPosition(function(position){
+					var latitude  = position.coords.latitude;
+					var longitude = position.coords.longitude;
+					var altitude  = position.coords.altitude;
+					document.getElementById('geolocation').innerHTML = '<label for="latitude">lat</label> : <input class="customInput" type="text" name="latitude" aria-describedby="latitude" id="latitude" value="' + latitude + '">'
+						+ '	<label for="longitude">lon</label> : <input class="customInput" type="text" name="longitude" aria-describedby="longitude" id="longitude" value="' + longitude + '">'
+						+ '<input class="customInput" type="submit" value="aires à proximité de ma position actuelle">';
+				});
+			}
+			function getLocalisation(){
+				if(navigator.geolocation){
+					return navigator.geolocation.getCurrentPosition(
+						function(position){
+							return {latitude:position.coords.latitude, longitude:position.coords.longitude, altitude:position.coords.altitude}
+					});
+				}
+			}
+			console.log(getLocalisation())
+		</script>
+
+		<header>
+			<div class="container">
+				<div class="row">
+					<div class="col col-lg-12 offset-lg txCenter">
+						<h1>Bienvenue dans cette béta d'api de reconnaissance de plante envahisante</h1>
+						<!-- <p> bonjour {{session["user"]["username"] if session ['user'] else 'invité' }}, Bienvenues sur mon site</p>
+						 -->
+					</div>
+				</div>
+			</div>
+		</header>
+		<main>
+			<div class="container">
+
+				<div class="row">
+					<div class="col col-lg-10 offset-lg-2">
+						<div style="display:flex;align-items: center;">
+							<h2>Select a file to upload</h2> 
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-file-earmark-arrow-up-fill" viewBox="0 0 16 16">
+								<path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM6.354 9.854a.5.5 0 0 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 8.707V12.5a.5.5 0 0 1-1 0V8.707L6.354 9.854z"/>
+							</svg>
+						</div>
+						<p>
+							{% with messages = get_flashed_messages() %}
+							{% if messages %}
+								Label: {{ messages[0] }}
+							{% endif %}
+							{% endwith %}
+						</p>
+					</div>
+					<div>
+						
+						<div id = "valpred">
+							{% with messages = get_flashed_messages() %}
+							{% if messages %}
+						
+								{{ messages[1] }}
+						
+							{% endif %}
+							{% endwith %}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col col-lg-8 offset-lg-2">
+
+					<!-- deuxième champ caché par défaut -->
+					<form id="geolocation" onLoad="getCoordPosition();" 
+					method="POST"  action="/analyse" enctype="multipart/form-data">
+					</form>
+
+					<form id="formImg" method="post" action="/analyse" enctype="multipart/form-data">
+
+					<p>
+						<input form="formImg" type="file" name="file" aria-describedby="file" id="file" autocomplete="off" required>
+					</p>
+				
+					<p>
+						<p>{{requete}}</p><br>
+						<h2>veuillez entrer l'adresse la plus précise d'ou vous avez pris la photo</h2>
+					
+						<label for="adresse">adress</label> : <input class="customInput" type="text" name="adresse" aria-describedby="adresse" id="adresse">
+						<input form="formImg" type="submit" value="Submit">
+						
+					</p>
+				</div>
+			</div>
+		<div>
+			<p>{{phrase}} : {{prediction}}, {{avec}} {{probabilité}}</p><br>
+			
+			
+			<p>{{phrase2}}</p><br>
+			
+			<img class="imgCustom" src = "{{img_source}}"><br>
+
+			<p>{{phrase3}}</p>
+			
+			<img class="imgCustom" src = "{{img_path}}"><br>
+		
+		
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+		</main>
+		<footer>
+
+		</footer>
+	</body>
+
+</html>
+

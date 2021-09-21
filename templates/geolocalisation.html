@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=9"/>
+  <title>HTML5 géolocalisation</title>
+ 
+</head>
+<body>
+<p id="demo">Click sur le boutton pour voir vos coordonées:</p>
+
+<button onclick="getLocation()">Montrer moi</button>
+ 
+<script>
+var x=document.getElementById("demo");
+function getLocation()
+  {
+  if (navigator.geolocation)
+    {
+   
+navigator.geolocation.getCurrentPosition(showPosition,showError);
+    }
+  else{x.innerHTML="Geolocation n’est pas prise en charge par ce navigateur.";}
+  }
+function showPosition(position)
+  {
+  x.innerHTML="Latitude: " + position.coords.latitude +"<br>Longitude: " + position.coords.longitude;    
+  }
+function showError(error)
+  {
+  switch(error.code)
+    {
+    case error.PERMISSION_DENIED:
+      x.innerHTML="localisation non autorisé par l'utilisateur."
+      break;
+    case error.POSITION_UNAVAILABLE:
+      x.innerHTML="L'information sur la localisation et indisponible."
+      break;
+    case error.TIMEOUT:
+      x.innerHTML="le temps de réponce est dépasé."
+      break;
+    case error.UNKNOWN_ERROR:
+      x.innerHTML="Une erreur inconu a été rencontrée."
+      break;
+    }
+  }
+  
+</script>
+</body>
+</html>

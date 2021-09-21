@@ -1,0 +1,74 @@
+@charset "utf-8";
+/* CSS Document */
+html{
+	width: 100vw;
+	height: 100vh;
+}
+body { 
+	color : black;
+	background: url('/static/image_fond3.jfif') no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	width: 100%;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin: 0;
+}
+body:last-child{
+	margin-block-start: auto;
+}
+
+header{
+	margin-bottom: 1em;
+	background: whitesmoke;
+	background: linear-gradient(whitesmoke 60%, rgba(100, 240, 150, .8));
+}
+footer{
+	margin-block-start: auto;
+	margin-top: 1em;
+	background: whitesmoke;
+}
+
+main{
+	flex:1;
+}
+	
+.customInput{
+	border-radius: 5px;
+	outline: none;
+	border-color: #cecece;
+	border-style: solid;
+	box-shadow: 1px 2px 5px 2px rgba(187, 195, 197, 0.6);
+
+}
+
+.flexCenter{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.txCenter{
+	text-align: center;
+}
+
+.imgCustom{
+	max-width: 300px;
+	height: auto;
+}
+
+
+.navLink a{
+	display: block;
+	padding: 8px 16px;
+	text-decoration: none;
+	transition: background .2s ease;
+	color: whitesmoke;
+	background: #179b8c;
+	border-bottom: whitesmoke;
+	border-bottom-width: 5px;
+}
