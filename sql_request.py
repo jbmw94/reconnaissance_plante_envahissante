@@ -1,4 +1,3 @@
-TABLE_PLANTE = "location_plante"
 
 def insert_request(table, columns):
     sql_request = "INSERT INTO " + table + " ("
@@ -34,7 +33,8 @@ def select_request(table, columns,where=""):
     return "SELECT " + cols + " FROM " + table + ( " WHERE " + where if where else "")
    
 
-def connection():
+def test_requests():
+    TABLE_PLANTE = "location_plante"
     print(insert_request(TABLE_PLANTE, ["plante", "adresse", "img"]))
     print(select_all_request(TABLE_PLANTE))
     columns = [{"col":"role", "alias":"role"}, {"col":"test"}, "hello"]
@@ -43,4 +43,5 @@ def connection():
     mail = "gwen@gmail.com"
     print(select_request(TABLE_PLANTE, ["rôle"], f"mail ='{mail}"))
 
-connection()
+#test_requests()
+

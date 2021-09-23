@@ -16,6 +16,7 @@ import flask
 from sqlconnect import role, connect, seach_user, create_account, check_user, good_password, password_exist, search_code
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_required, current_user
+from constantes import URL_LOGIN, URL_PROFILE, URL_SIGNUP, URL_RESULT, URL_INDEX
 #import pillow
 
 
@@ -48,11 +49,6 @@ from flask_login import login_required, current_user
 
 
 
-URL_LOGIN = "login.html"
-URL_PROFILE = 'profile.html'
-URL_SIGNUP = "signup.html"
-URL_RESULT = "resultat2.html"
-URL_INDEX = "index2.html"
 
 @app.route('/', methods = ['POST', 'GET'])
 def login (): 
@@ -144,9 +140,6 @@ def signup ():
 
 @app.route('/analyse', methods=['POST', 'GET'])
 def submit_file():
-    
-
-    
     if request.method == 'POST':
         if 'file' not in request.files:
             flash('No file part')
