@@ -124,11 +124,8 @@ def create_account(mail, pasword, username) :
     curs, conect = conn(DB_NAME_LOGIN)
     sql = insert_request(TABLE_USERS, ["mail", "password", "username", "rôle"])
 
-    if mail=="jb.mw@orange.fr":        
-        value = (mail,  pasword, username, "admin")
-    else :
-        value = (mail,  pasword, username, "user")
-
+    role = "admin " if mail=="jb.mw@orange.fr" else "user"
+    value = (mail,  pasword, username, role)
     commit(curs, conect, sql, value)
             
     print("Enregistrement inséré avec succès dans la table Users")
@@ -139,7 +136,7 @@ def check_user(mail) :
     cur_check, con_check = conn(DB_NAME_LOGIN)
     cur_check.execute(select_request(TABLE_USERS, "*", f"mail ='{mail}'")) 
 
-    find = "False " if len(cur_check.fetchall()) == 0 else "True"
+    find = "False " if len(cur_check.fetchall())==0 else "True"
 
     close(cur_check, con_check)
     return find
@@ -150,7 +147,7 @@ def good_password (mail, password, username):
     cur_pas, con_pas = conn(DB_NAME_LOGIN)
     cur_pas.execute(select_request(TABLE_USERS, "*", f"mail = '{mail}' AND password = '{password}' AND username =  '{username}'"))
 
-    auth = "fail " if len(cur_check.fetchall()) == 0 else "valid"
+    auth = "fail " if len(cur_check.fetchall())==0 else "valid"
 
     close(cur_pas, con_pas)
     return auth
@@ -160,10 +157,11 @@ def password_exist(password) :
     cur_check.execute(select_request(TABLE_USERS, "*", f"password = '{password}'")) 
     resultat = list(cur_check)
 
-    find = "indisponible " if len(cur_check.fetchall()) == 0 else "False"
+    find = "indisponible " if len(resultat) == 1 else "False"
 
     close(cur_check, con_check)
     return find
+
 
 
 
